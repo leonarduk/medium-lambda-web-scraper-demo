@@ -32,7 +32,7 @@ def mocked_requests_get(*args, **kwargs):
 
 def create_stats_table(db):
     table = db.create_table(
-        TableName='HomeStats',
+        TableName='HomeStatsDB',
         KeySchema=[
             {
                 'AttributeName': 'Field',
@@ -59,7 +59,7 @@ def create_stats_table(db):
     )
 
     # Wait until the table exists.
-    table.meta.client.get_waiter('table_exists').wait(TableName='HomeStats')
+    table.meta.client.get_waiter('table_exists').wait(TableName='HomeStatsDB')
     assert table.table_status == 'ACTIVE'
 
     return table

@@ -33,7 +33,7 @@ def save_fields_to_db(fields: dict, dynamodb):
     date_string = datetime.today().strftime('%Y-%m-%d')
     for field in fields:
         print(f"PUT {date_string} = {field} = {fields[field]} ")
-        table = dynamodb.Table('HomeStats')
+        table = dynamodb.Table('HomeStatsDB')
         result = table.put_item(Item={
                                        'Field': field,
                                        'Date': date_string,
