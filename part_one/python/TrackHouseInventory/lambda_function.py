@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 def lambda_handler(event, context):
     site = os.environ['site']
     field_map = fetch_fields(site)
-    dynamodb = boto3.client('dynamodb')
+    dynamodb = boto3.resource('dynamodb')
 
     save_fields_to_db(field_map, dynamodb)
 

@@ -11,7 +11,7 @@
       "dynamodb:PutItem",
       "dynamodb:UpdateItem"
     ],
-    "Resource": "arn:aws:dynamodb:eu-west-1:*:table/HomeStats"
+    "Resource": "arn:aws:dynamodb:eu-west-1:*:table/HomeStatsDB"
   }
   ]
 }
