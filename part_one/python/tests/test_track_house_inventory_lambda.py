@@ -7,10 +7,11 @@ from unittest import mock
 import boto3  # AWS SDK for Python
 from moto.dynamodb import mock_dynamodb  # since we're going to mock DynamoDB service
 
-from ..lambda_function import save_fields_to_db, fetch_fields
-
-
 # This method will be used by the mock to replace requests.get
+from part_one.python.TrackHouseInventory.lambda_function import fetch_fields, save_fields_to_db
+from part_one.python.tests.mock_db_utils import create_stats_table
+
+
 def mocked_requests_get(*args, **kwargs):
     class MockResponse:
         def __init__(self, text, status_code):
@@ -28,41 +29,6 @@ def mocked_requests_get(*args, **kwargs):
         return MockResponse(data, 200)
 
     return MockResponse(None, 404)
-
-
-def create_stats_table(db):
-    table = db.create_table(
-        TableName='HomeStatsDB',
-        KeySchema=[
-            {
-                'AttributeName': 'Field',
-                'KeyType': 'HASH'
-            },
-            {
-                'AttributeName': 'Date',
-                'KeyType': 'RANGE'
-            }
-        ],
-        AttributeDefinitions=[
-            {
-                'AttributeName': 'Field',
-                'AttributeType': 'S'
-            },
-            {
-                'AttributeName': 'Date',
-                'AttributeType': 'S'
-            }],
-        ProvisionedThroughput={
-            'ReadCapacityUnits': 1,
-            'WriteCapacityUnits': 1
-        }
-    )
-
-    # Wait until the table exists.
-    table.meta.client.get_waiter('table_exists').wait(TableName='HomeStatsDB')
-    assert table.table_status == 'ACTIVE'
-
-    return table
 
 
 @mock_dynamodb
