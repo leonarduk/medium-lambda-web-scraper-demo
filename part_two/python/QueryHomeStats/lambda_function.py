@@ -7,21 +7,24 @@ TABLE_NAME = "HomeStatsDB"
 
 
 def lambda_handler(event, context_ignore_me):
-    print(F"EVENT {event}")
-    dynamodb_client = boto3.client("dynamodb")
+    try:
+        print(F"EVENT {event}")
+        dynamodb_client = boto3.client("dynamodb")
 
-    if "queryStringParameters" not in event or event["queryStringParameters"] is None \
-            or "field" not in event["queryStringParameters"]:
-        return wrap_response(find_distinct_field_names())
+        if "queryStringParameters" not in event or event["queryStringParameters"] is None \
+                or "field" not in event["queryStringParameters"]:
+            return wrap_response(find_distinct_field_names())
 
-    field = event["queryStringParameters"]["field"]
-    return wrap_response(run_query_on_field(dynamodb_client, field))
+        field = event["queryStringParameters"]["field"]
+        return wrap_response(run_query_on_field(dynamodb_client, field))
+    except Exception as e:
+        return wrap_response(F"Error when trying to run query: {e}", status_code=500)
 
 
-def wrap_response(response_body):
+def wrap_response(response_body, status_code=200):
     print(response_body)
     response = {
-        "statusCode": 200,
+        "statusCode": status_code,
         "headers": {},
         "body": response_body
     }
@@ -31,19 +34,28 @@ def wrap_response(response_body):
 def find_distinct_field_names():
     response = boto3.resource(
         'dynamodb').Table(TABLE_NAME).scan()
+
+    # we want to avoid duplicates
     fields_set = {i['Field'] for i in response['Items']}
-    return json.dumps(list(fields_set))
+
+    # convert set to list
+    fields = list(fields_set)
+
+    # sort the list so results are predictable
+    fields.sort()
+
+    return json.dumps(fields)
 
 
 def run_query_on_field(dynamodb_resource, field):
-    table = dynamodb_resource.Table('HomeStatsDB')
-
-    response = table.query(
+    response = boto3.resource(
+        'dynamodb').Table(TABLE_NAME).query(
         KeyConditionExpression=Key('Field').eq(field),
         ExpressionAttributeValues={
             ':field': {'S': field}
         }
     )
+
 
     response_body = "Date,Value\n"
     for record in response['Items']:
