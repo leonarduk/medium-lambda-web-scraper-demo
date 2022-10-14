@@ -21,7 +21,7 @@ class TestLambda(unittest.TestCase):
         save_fields_to_db(fields=fields, dynamodb=db)
 
         # run the code under test
-        actual = find_distinct_field_names()
+        actual = find_distinct_field_names(dynamodb_resource=db)
         expected = '["field1", "field2"]'
         assert actual == expected
 
@@ -79,7 +79,9 @@ class TestLambda(unittest.TestCase):
         actual = lambda_handler(event=event, context_ignore_me=None)
         print(actual)
         assert actual.get("statusCode") == 200
-        assert actual.get("body") == 'Date,Value\n2022-10-11,value1\n'
+        date_string = datetime.today().strftime('%Y-%m-%d')
+
+        assert actual.get("body") == f'Date,Value\n{date_string},value1\n'
 
 
 if __name__ == '__main__':

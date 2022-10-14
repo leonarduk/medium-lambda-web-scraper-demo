@@ -9,14 +9,14 @@ TABLE_NAME = "HomeStatsDB"
 def lambda_handler(event, context_ignore_me):
     try:
         print(F"EVENT {event}")
-        dynamodb_client = boto3.client("dynamodb")
+        dynamodb = boto3.resource("dynamodb")
 
         if "queryStringParameters" not in event or event["queryStringParameters"] is None \
                 or "field" not in event["queryStringParameters"]:
-            return wrap_response(find_distinct_field_names())
+            return wrap_response(find_distinct_field_names(dynamodb))
 
         field = event["queryStringParameters"]["field"]
-        return wrap_response(run_query_on_field(dynamodb_client, field))
+        return wrap_response(run_query_on_field(dynamodb, field))
     except Exception as e:
         return wrap_response(F"Error when trying to run query: {e}", status_code=500)
 
@@ -31,9 +31,8 @@ def wrap_response(response_body, status_code=200):
     return response
 
 
-def find_distinct_field_names():
-    response = boto3.resource(
-        'dynamodb').Table(TABLE_NAME).scan()
+def find_distinct_field_names(dynamodb_resource):
+    response = dynamodb_resource.Table(TABLE_NAME).scan()
 
     # we want to avoid duplicates
     fields_set = {i['Field'] for i in response['Items']}
@@ -48,12 +47,8 @@ def find_distinct_field_names():
 
 
 def run_query_on_field(dynamodb_resource, field):
-    response = boto3.resource(
-        'dynamodb').Table(TABLE_NAME).query(
-        KeyConditionExpression=Key('Field').eq(field),
-        ExpressionAttributeValues={
-            ':field': {'S': field}
-        }
+    response = dynamodb_resource.Table(TABLE_NAME).query(
+        KeyConditionExpression=Key('Field').eq(field)
     )
 
 
