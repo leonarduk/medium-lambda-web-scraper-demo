@@ -1,0 +1,280 @@
+{
+  "version": 4,
+  "terraform_version": "1.1.9",
+  "serial": 10,
+  "lineage": "652776fe-c950-2137-d834-e95d78f7c11a",
+  "outputs": {},
+  "resources": [
+    {
+      "module": "module.gateway",
+      "mode": "managed",
+      "type": "aws_api_gateway_deployment",
+      "name": "gateway_deployment",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "created_date": "2022-08-07T20:57:07Z",
+            "description": "",
+            "execution_arn": "arn:aws:execute-api:eu-west-1:575836911148:imeojfy8u2/dev",
+            "id": "zazldd",
+            "invoke_url": "https://imeojfy8u2.execute-api.eu-west-1.amazonaws.com/dev",
+            "rest_api_id": "imeojfy8u2",
+            "stage_description": null,
+            "stage_name": "dev",
+            "triggers": null,
+            "variables": null
+          },
+          "sensitive_attributes": [],
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.gateway.aws_api_gateway_integration.lambda",
+            "module.gateway.aws_api_gateway_integration.lambda_root",
+            "module.gateway.aws_api_gateway_method.proxy",
+            "module.gateway.aws_api_gateway_method.proxy_root",
+            "module.gateway.aws_api_gateway_resource.proxy",
+            "module.gateway.aws_api_gateway_rest_api.gateway_api"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.gateway",
+      "mode": "managed",
+      "type": "aws_api_gateway_integration",
+      "name": "lambda",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "cache_key_parameters": [],
+            "cache_namespace": "k4u35s",
+            "connection_id": "",
+            "connection_type": "INTERNET",
+            "content_handling": "",
+            "credentials": "",
+            "http_method": "ANY",
+            "id": "agi-imeojfy8u2-k4u35s-ANY",
+            "integration_http_method": "POST",
+            "passthrough_behavior": "WHEN_NO_MATCH",
+            "request_parameters": {},
+            "request_templates": {},
+            "resource_id": "k4u35s",
+            "rest_api_id": "imeojfy8u2",
+            "timeout_milliseconds": 29000,
+            "tls_config": [],
+            "type": "AWS_PROXY",
+            "uri": "arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:575836911148:function:HS_QueryHomeStats/invocations"
+          },
+          "sensitive_attributes": [],
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.gateway.aws_api_gateway_method.proxy",
+            "module.gateway.aws_api_gateway_resource.proxy",
+            "module.gateway.aws_api_gateway_rest_api.gateway_api"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.gateway",
+      "mode": "managed",
+      "type": "aws_api_gateway_integration",
+      "name": "lambda_root",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "cache_key_parameters": [],
+            "cache_namespace": "690n5rwnaj",
+            "connection_id": "",
+            "connection_type": "INTERNET",
+            "content_handling": "",
+            "credentials": "",
+            "http_method": "ANY",
+            "id": "agi-imeojfy8u2-690n5rwnaj-ANY",
+            "integration_http_method": "POST",
+            "passthrough_behavior": "WHEN_NO_MATCH",
+            "request_parameters": {},
+            "request_templates": {},
+            "resource_id": "690n5rwnaj",
+            "rest_api_id": "imeojfy8u2",
+            "timeout_milliseconds": 29000,
+            "tls_config": [],
+            "type": "AWS_PROXY",
+            "uri": "arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:575836911148:function:HS_QueryHomeStats/invocations"
+          },
+          "sensitive_attributes": [],
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.gateway.aws_api_gateway_method.proxy_root",
+            "module.gateway.aws_api_gateway_rest_api.gateway_api"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.gateway",
+      "mode": "managed",
+      "type": "aws_api_gateway_method",
+      "name": "proxy",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "api_key_required": false,
+            "authorization": "NONE",
+            "authorization_scopes": [],
+            "authorizer_id": "",
+            "http_method": "ANY",
+            "id": "agm-imeojfy8u2-k4u35s-ANY",
+            "operation_name": "",
+            "request_models": {},
+            "request_parameters": {},
+            "request_validator_id": "",
+            "resource_id": "k4u35s",
+            "rest_api_id": "imeojfy8u2"
+          },
+          "sensitive_attributes": [],
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.gateway.aws_api_gateway_resource.proxy",
+            "module.gateway.aws_api_gateway_rest_api.gateway_api"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.gateway",
+      "mode": "managed",
+      "type": "aws_api_gateway_method",
+      "name": "proxy_root",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "api_key_required": false,
+            "authorization": "NONE",
+            "authorization_scopes": [],
+            "authorizer_id": "",
+            "http_method": "ANY",
+            "id": "agm-imeojfy8u2-690n5rwnaj-ANY",
+            "operation_name": "",
+            "request_models": {},
+            "request_parameters": {},
+            "request_validator_id": "",
+            "resource_id": "690n5rwnaj",
+            "rest_api_id": "imeojfy8u2"
+          },
+          "sensitive_attributes": [],
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.gateway.aws_api_gateway_rest_api.gateway_api"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.gateway",
+      "mode": "managed",
+      "type": "aws_api_gateway_resource",
+      "name": "proxy",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "k4u35s",
+            "parent_id": "690n5rwnaj",
+            "path": "/{proxy+}",
+            "path_part": "{proxy+}",
+            "rest_api_id": "imeojfy8u2"
+          },
+          "sensitive_attributes": [],
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.gateway.aws_api_gateway_rest_api.gateway_api"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.gateway",
+      "mode": "managed",
+      "type": "aws_api_gateway_rest_api",
+      "name": "gateway_api",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "api_key_source": "HEADER",
+            "arn": "arn:aws:apigateway:eu-west-1::/restapis/imeojfy8u2",
+            "binary_media_types": [],
+            "body": null,
+            "created_date": "2022-08-07T20:57:06Z",
+            "description": "HomeStats Query",
+            "disable_execute_api_endpoint": false,
+            "endpoint_configuration": [
+              {
+                "types": [
+                  "EDGE"
+                ],
+                "vpc_endpoint_ids": []
+              }
+            ],
+            "execution_arn": "arn:aws:execute-api:eu-west-1:575836911148:imeojfy8u2",
+            "id": "imeojfy8u2",
+            "minimum_compression_size": -1,
+            "name": "HomestatsQuery",
+            "parameters": null,
+            "policy": "",
+            "put_rest_api_mode": null,
+            "root_resource_id": "690n5rwnaj",
+            "tags": {},
+            "tags_all": {}
+          },
+          "sensitive_attributes": [],
+          "private": "bnVsbA=="
+        }
+      ]
+    },
+    {
+      "module": "module.gateway",
+      "mode": "managed",
+      "type": "aws_lambda_permission",
+      "name": "apigw",
+      "provider": "provider[\"registry.terraform.io/hashicorp/aws\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "action": "lambda:InvokeFunction",
+            "event_source_token": null,
+            "function_name": "HS_QueryHomeStats",
+            "function_url_auth_type": null,
+            "id": "AllowAPIGatewayInvoke",
+            "principal": "apigateway.amazonaws.com",
+            "principal_org_id": null,
+            "qualifier": "",
+            "source_account": null,
+            "source_arn": "arn:aws:execute-api:eu-west-1:575836911148:imeojfy8u2/*/*",
+            "statement_id": "AllowAPIGatewayInvoke",
+            "statement_id_prefix": ""
+          },
+          "sensitive_attributes": [],
+          "private": "bnVsbA==",
+          "dependencies": [
+            "module.gateway.aws_api_gateway_rest_api.gateway_api"
+          ]
+        }
+      ]
+    }
+  ]
+}
+
